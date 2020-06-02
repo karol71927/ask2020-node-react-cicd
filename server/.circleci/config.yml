@@ -6,9 +6,9 @@ jobs:
   executor: node/default
   steps:
    - checkout
-   - node/install-packages
-   - run:
-    comand: npm test
+#   - node/install-packages
+   - run: npm install
+   - run: npm test
 workflows:
  build-and-test:
   jobs:
