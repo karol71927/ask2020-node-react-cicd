@@ -3,7 +3,7 @@ orbs:
  node: circleci/node@2.1.0
 jobs:
  build-and-test:
-  working_directory: home/ask2020-node-react-cicd/server/
+  working_directory: ~/ask2020-node-react-cicd/server/
   executor: node/default
   steps:
    - checkout
