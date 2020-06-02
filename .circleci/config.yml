@@ -1,23 +1,33 @@
 version: 2.1
-#orbs:
+orbs:
+ dockerro: circleci/docker@1.0.1
 # node: circleci/node@1.1.6
 jobs:
+ bulid:
+  executor: dockerro/docker
+  steps:
+   - setup_remote_docker
+   - checkout
+   - dockerro/build:
+    image: ~/ask2020-node-react-cicd
+    path: ./server
  build-and-test:
   docker:
-   - image: circleci/node:latest
+   - image: circleci/node
 #  working_directory: ~/ask2020-node-react-cicd/server/
-  executor: 
-   name: node/default
+#  executor: 
+#   name: node/default
   steps:
    - checkout
 #   - node/install-packages
-   - node/with-cache:
-    steps:   
-     - run: npm install
-     - run: npm test
+#   - node/with-cache:
+#    steps:   
+   - run: npm install
+   - run: npm test
 workflows:
  build-and-test:
   jobs:
+   - build
    - build-and-test
 #    filters:
 #     branches:
