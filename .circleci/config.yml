@@ -9,10 +9,10 @@ jobs:
 #   - node/install-packages
    - run: npm install
    - run: npm test
-#workflows:
-# build-and-test:
-#  jobs:
-#   - build-and-test:
+workflows:
+ build-and-test:
+  jobs:
+   - build-and-test:
 #    filters:
 #     branches:
 #      ignore:
