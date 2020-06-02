@@ -1,15 +1,18 @@
 version: 2.1
 orbs:
- node: circleci/node@2.1.0
+ node: circleci/node@1.1.6
 jobs:
  build-and-test:
-  working_directory: ~/ask2020-node-react-cicd/server/
-  executor: node/default
+#  working_directory: ~/ask2020-node-react-cicd/server/
+  executor: 
+   name: node/default
   steps:
    - checkout
 #   - node/install-packages
-   - run: npm install
-   - run: npm test
+   - node/with-cache:
+    steps:   
+     - run: npm install
+     - run: npm test
 workflows:
  build-and-test:
   jobs:
