@@ -19,7 +19,8 @@ jobs:
    name: node/default
   steps:
    - checkout
-   - node/install-packages: ./server
+   - node/install-packages:
+    - app_dir ./server
 #   - node/with-cache:
 #    steps: 
    - run: pwd
