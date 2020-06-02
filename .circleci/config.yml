@@ -14,17 +14,18 @@ jobs:
  build-and-test:
 #  docker:
 #   - image: circleci/node
-  working_directory: ../server
+  working_directory: ./server
   executor: 
    name: node/default
   steps:
    - checkout
-#   - node/install-packages
+   - node/install-packages:
+    - app-dir: ./server
 #   - node/with-cache:
 #    steps: 
    - run: pwd
    - run: ls -a
-   - run: npm install
+#   - run: npm install
    - run: npm test
 workflows:
  build-and-test:
