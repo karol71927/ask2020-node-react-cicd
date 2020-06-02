@@ -21,7 +21,8 @@ jobs:
    - checkout
 #   - node/install-packages
 #   - node/with-cache:
-#    steps:   
+#    steps: 
+   - run: cd ~/ask2020-node-react-cicd/server  
    - run: pwd
    - run: ls -a
    - run: npm install
