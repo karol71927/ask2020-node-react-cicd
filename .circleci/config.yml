@@ -6,11 +6,11 @@ jobs:
  bulid:
   executor: dockerro/docker
   steps:
-   - setup_remote_docker
-   - checkout
-   - dockerro/build:
-    image: ~/ask2020-node-react-cicd
-    path: ./server
+    - setup_remote_docker
+    - checkout
+    - dockerro/build:
+      image: ~/ask2020-node-react-cicd
+      path: ./server
  build-and-test:
   docker:
    - image: circleci/node
