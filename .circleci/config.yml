@@ -20,7 +20,7 @@ jobs:
   steps:
    - checkout
    - node/install-packages:
-    - app_dir ./server
+    - app-dir ./server
 #   - node/with-cache:
 #    steps: 
    - run: pwd
