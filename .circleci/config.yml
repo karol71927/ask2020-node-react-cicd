@@ -2,24 +2,44 @@ version: 2.1
 orbs:
   dockerro: circleci/docker@1.0.1
 jobs:
-  build-image:
+  node-server:
     executor: dockerro/docker
     steps:
       - setup_remote_docker
       - checkout
       - dockerro/build:
-          image: karol71927/ask2020-node-react-cicd
+          image: karol71927/node-server
           path: ./server
-  test-image:
-    docker:
-      - image: karol71927/ask2020-node-react-cicd
-          path: ./server
+  react-client:
+    executor: dockerro/docker
     steps:
-      - run: npm test
+      - setup_remote_docker
+      - checkout
+      - dockerro/build:
+          image: karol71927/react-client
+          path: ./client   
+  docker-publish:
+    machine: true
+    steps:
+      - checkout
+      - run: docker push karol71927/ask2020-node-react-cicd
+#  test-image:
+#    docker:
+#      - image: karol71927/ask2020-node-react-cicd
+#    steps:
+#      - run: npm test
 workflows:
   build-and-test:
     jobs:
-      - build-image
-      - test-image:
+      - node-server
+      - react-client
+      - docker-publish:
           requires:
-            - build-image
+            - node-server
+            - react-client
+          filters:
+            branches:
+              only: master
+#      - test-image:
+#          requires:
+#            - build-image
