@@ -12,7 +12,7 @@ jobs:
           path: ./server
   test-image:
     docker:
-      - image karol71927/ask2020-node-react-cicd
+      - image: karol71927/ask2020-node-react-cicd
     steps:
       - run: npm test 
 workflows:
