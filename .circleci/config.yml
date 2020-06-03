@@ -22,7 +22,7 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: docker push karol71927/ask2020-node-react-cicd
+      - run: docker push [docker.io/karol71927/ask2020-node-react-cicd]
 #  test-image:
 #    docker:
 #      - image: karol71927/ask2020-node-react-cicd
