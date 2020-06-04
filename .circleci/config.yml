@@ -33,7 +33,6 @@ jobs:
                     
   docker-publish:
     machine: true
-    context: DOCKER_PASS
     steps:
       - checkout
       - run: 
