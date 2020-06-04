@@ -30,21 +30,20 @@ jobs:
       - run:
           command: 
             npm test
-            echo \"$SLOWO\"
           working_directory: ./client
                     
   docker-publish:
     machine: true
     steps:
       - checkout
-      - run: 
-          command: | 
-            echo \"$DOCKER_PASS\" | docker login -u \"karol71927\" --password-stdin
+      - run:
+          command: docker login -u karol71927 -p $DOCKER_PASS
+      - run: #echo \"$DOCKER_PASS\" | docker login -u \"karol71927\" --password-stdin
+          command: |  
             sudo docker build -t karol71927/server ./server
             sudo docker push karol71927/server
-      - run:
-          command: | 
-            echo \"$DOCKER_PASS\" | docker login -u \"karol71927\" --password-stdin
+      - run: #echo \"$DOCKER_PASS\" | docker login -u \"karol71927\" --password-stdin
+          command: |
             sudo docker build -t karol71927/client ./client
             sudo docker push karol71927/client
                         
