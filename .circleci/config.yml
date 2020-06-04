@@ -40,11 +40,13 @@ jobs:
             echo \"$DOCKER_PASS\" | docker login -u \"karol71927\" --password-stdin
             sudo docker build -t karol71927/server ./server
             sudo docker push karol71927/server
+          context: DOCKER_PASS
       - run:
           command: | 
             echo \"$DOCKER_PASS\" | docker login -u \"karol71927\" --password-stdin
             sudo docker build -t karol71927/client ./client
             sudo docker push karol71927/client
+          context: DOCKER_PASS
                         
 workflows:
   build-and-test:
