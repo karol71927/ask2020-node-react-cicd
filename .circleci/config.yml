@@ -1,46 +1,68 @@
 version: 2.1
 orbs:
-  dockerro: circleci/docker@1.0.1
+  node: circleci/node@2.1.0
 jobs:
-  node-server:
-    executor: dockerro/docker
+  docker-setup:
+    executor:
+      name: node/default
     steps:
-      - setup_remote_docker
       - checkout
-      - dockerro/build:
-          image: karol71927/node-server
-          path: ./server
-  react-client:
-    executor: dockerro/docker
+      - setup_remote_docker
+      
+  test-server:
+    executor:
+      name: node/default
     steps:
-      - setup_remote_docker
       - checkout
-      - dockerro/build:
-          image: karol71927/react-client
-          path: ./client   
+      - node/install-packages:
+          app-dir: ./server
+      - run:
+          command: npm test
+          working_directory: ./server
+
+  test-client:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          app-dir: ./client
+      - run:
+          command: npm test
+          working_directory: ./client
+                    
   docker-publish:
     machine: true
     steps:
       - checkout
-      - run: docker commit karol71927/node-server karol71927/react-client
-      - run: docker push karol71927/ask2020-node-react-cicd
-#  test-image:
-#    docker:
-#      - image: karol71927/ask2020-node-react-cicd
-#    steps:
-#      - run: npm test
+      - run: 
+          command: | 
+            echo \"$DOCKER_PASS\" | docker login -u \"karol71927\" --password-stdin
+            sudo docker build -t karol71927/server ./server
+            sudo docker push karol71927/server
+      - run:
+          command: | 
+            echo \"$DOCKER_PASS\" | docker login -u \"karol71927\" --password-stdin
+            sudo docker build -t karol71927/client ./client
+            sudo docker push karol71927/client
+                        
 workflows:
   build-and-test:
     jobs:
-      - node-server
-      - react-client
+      - docker-setup
+      - test-server:
+        filters:
+          branches:
+            only: master
+      - test-client:
+        filters:
+          branches:
+            only: master
       - docker-publish:
-          requires:
-            - node-server
-            - react-client
-          filters:
-            branches:
-              only: master
-#      - test-image:
-#          requires:
-#            - build-image
+        filters:
+          branches:
+            only: master
+        requires:
+          - docker-setup
+          - test-server
+          - test-client
