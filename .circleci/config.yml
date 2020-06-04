@@ -66,6 +66,3 @@ workflows:
             - docker-setup
             - test-client
             - test-server
-          - docker-setup
-          - test-server
-          - test-client
