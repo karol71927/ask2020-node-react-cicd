@@ -28,7 +28,9 @@ jobs:
       - node/install-packages:
           app-dir: ./client
       - run:
-          command: npm test
+          command: 
+            npm test
+            echo \"$SLOWO\"
           working_directory: ./client
                     
   docker-publish:
