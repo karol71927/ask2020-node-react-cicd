@@ -51,18 +51,21 @@ workflows:
     jobs:
       - docker-setup
       - test-server:
-        filters:
-          branches:
-            only: master
+          filters:
+            branches:
+              only: master
       - test-client:
-        filters:
-          branches:
-            only: master
+          filters:
+            branches:
+              only: master
       - docker-publish:
-        filters:
-          branches:
-            only: master
-        requires:
+          filters:
+            branches:
+              only: master
+          requires:
+            - docker-setup
+            - test-client
+            - test-server
           - docker-setup
           - test-server
           - test-client
